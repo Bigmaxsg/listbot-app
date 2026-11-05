@@ -93,8 +93,12 @@ export async function render(root) {
     const idx = () => Number(tile.dataset.idx);
     const photoTiles = () => [...grid.querySelectorAll(".tile:not(.add)")];
 
+    let slots = [];
     function begin() {
       dragging = true;
+      // Grid squares are fixed while the page is locked, so record them once. Hit-testing the live tiles
+      // instead made neighbours bounce: a tile still sliding away was "under the finger" again.
+      slots = photoTiles().map((el) => el.getBoundingClientRect());
       const r = tile.getBoundingClientRect();
       grabX = startX - r.left; grabY = startY - r.top;
       tile.classList.add("dragging");
@@ -103,15 +107,14 @@ export async function render(root) {
     }
 
     function follow(x, y) {
-      const under = document.elementsFromPoint(x, y)
-        .find((el) => el !== tile && el.classList && el.classList.contains("tile") && !el.classList.contains("add"));
-      if (under) {
-        const tiles = photoTiles();
+      const target = slots.findIndex((r) => x >= r.left && x <= r.right && y >= r.top && y <= r.bottom);
+      const tiles = photoTiles();
+      const from = tiles.indexOf(tile);
+      if (target >= 0 && target !== from) {
         const others = tiles.filter((el) => el !== tile);
         const before = new Map(others.map((el) => [el, el.getBoundingClientRect()]));
-        const from = tiles.indexOf(tile); const to = tiles.indexOf(under);
-        grid.insertBefore(tile, from < to ? under.nextSibling : under);
-        others.forEach((el) => { // slide the displaced photos into their new spots
+        grid.insertBefore(tile, others[target] || grid.querySelector(".tile.add"));
+        others.forEach((el) => { // slide the displaced photos into their new squares
           const a = before.get(el); const b = el.getBoundingClientRect();
           if (a.left !== b.left || a.top !== b.top) {
             el.animate([{ transform: `translate(${a.left - b.left}px, ${a.top - b.top}px)` }, { transform: "none" }],
