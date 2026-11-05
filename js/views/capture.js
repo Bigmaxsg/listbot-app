@@ -83,34 +83,98 @@ export async function render(root) {
     document.body.append(overlay);
   }
 
-  // Long-press (300ms) then drag to reorder; a plain tap opens the action sheet.
-  function attachDrag(tile, index) {
-    let timer = null; let dragging = false; let startX = 0; let startY = 0; let cur = index;
+  // Hold ~250ms, then drag to reorder. iOS starts scrolling the page as soon as a finger moves, which
+  // cancels the drag, so while dragging we block scrolling (non-passive touchmove + preventDefault) and
+  // lock the body. The other photos slide out of the way live. A quick tap opens the action sheet;
+  // a quick swipe (no hold) still scrolls the page normally.
+  function attachDrag(tile) {
+    let timer = null; let dragging = false; let moved = false;
+    let startX = 0; let startY = 0; let grabX = 0; let grabY = 0;
+    const idx = () => Number(tile.dataset.idx);
+    const photoTiles = () => [...grid.querySelectorAll(".tile:not(.add)")];
+
+    function begin() {
+      dragging = true;
+      const r = tile.getBoundingClientRect();
+      grabX = startX - r.left; grabY = startY - r.top;
+      tile.classList.add("dragging");
+      document.body.classList.add("drag-lock");
+      haptic(15);
+    }
+
+    function follow(x, y) {
+      const under = document.elementsFromPoint(x, y)
+        .find((el) => el !== tile && el.classList && el.classList.contains("tile") && !el.classList.contains("add"));
+      if (under) {
+        const tiles = photoTiles();
+        const others = tiles.filter((el) => el !== tile);
+        const before = new Map(others.map((el) => [el, el.getBoundingClientRect()]));
+        const from = tiles.indexOf(tile); const to = tiles.indexOf(under);
+        grid.insertBefore(tile, from < to ? under.nextSibling : under);
+        others.forEach((el) => { // slide the displaced photos into their new spots
+          const a = before.get(el); const b = el.getBoundingClientRect();
+          if (a.left !== b.left || a.top !== b.top) {
+            el.animate([{ transform: `translate(${a.left - b.left}px, ${a.top - b.top}px)` }, { transform: "none" }],
+              { duration: 180, easing: "cubic-bezier(.2,.8,.2,1)" });
+          }
+        });
+        haptic(5);
+      }
+      tile.style.transform = "none";
+      const r = tile.getBoundingClientRect();
+      tile.style.transform = `translate(${x - grabX - r.left}px, ${y - grabY - r.top}px) scale(1.06)`;
+    }
+
+    function finish() {
+      clearTimeout(timer);
+      if (!dragging) return false;
+      dragging = false;
+      tile.classList.remove("dragging");
+      document.body.classList.remove("drag-lock");
+      const order = photoTiles().map((el) => Number(el.dataset.idx));
+      state.photos = order.map((i) => state.photos[i]);
+      drawGrid();
+      return true;
+    }
+
+    // Touch (iPhone)
+    tile.addEventListener("touchstart", (e) => {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY; moved = false;
+      timer = setTimeout(begin, 250);
+    }, { passive: true });
+    tile.addEventListener("touchmove", (e) => {
+      const t0 = e.touches[0];
+      if (dragging) { e.preventDefault(); follow(t0.clientX, t0.clientY); return; }
+      if (Math.hypot(t0.clientX - startX, t0.clientY - startY) > 8) { moved = true; clearTimeout(timer); }
+    }, { passive: false });
+    tile.addEventListener("touchend", (e) => {
+      if (finish()) return;
+      clearTimeout(timer);
+      if (!moved) { e.preventDefault(); sheet(idx()); }
+    });
+    tile.addEventListener("touchcancel", finish);
+    tile.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    // Mouse (Mac browser): same hold-then-drag.
     tile.addEventListener("pointerdown", (e) => {
-      startX = e.clientX; startY = e.clientY; cur = index;
-      timer = setTimeout(() => { dragging = true; tile.classList.add("dragging"); haptic(15); tile.setPointerCapture(e.pointerId); }, 300);
+      if (e.pointerType !== "mouse") return;
+      startX = e.clientX; startY = e.clientY; moved = false;
+      tile.setPointerCapture(e.pointerId);
+      timer = setTimeout(begin, 250);
     });
     tile.addEventListener("pointermove", (e) => {
-      if (!dragging) {
-        if (Math.hypot(e.clientX - startX, e.clientY - startY) > 8) clearTimeout(timer);
-        return;
-      }
-      e.preventDefault();
-      tile.style.transform = `translate(${e.clientX - startX}px, ${e.clientY - startY}px) scale(1.06)`;
-      const under = document.elementsFromPoint(e.clientX, e.clientY).find((el) => el.dataset && el.dataset.idx && el !== tile);
-      if (under) grid.querySelectorAll(".tile").forEach((t) => t.classList.toggle("drop", t === under));
-      cur = under ? Number(under.dataset.idx) : cur;
+      if (e.pointerType !== "mouse") return;
+      if (dragging) { follow(e.clientX, e.clientY); return; }
+      if (Math.hypot(e.clientX - startX, e.clientY - startY) > 8) { moved = true; clearTimeout(timer); }
     });
-    const end = () => {
-      clearTimeout(timer);
-      if (dragging) { dragging = false; move(index, cur); }
-    };
     tile.addEventListener("pointerup", (e) => {
-      const wasDrag = dragging;
-      end();
-      if (!wasDrag && Math.hypot(e.clientX - startX, e.clientY - startY) < 8) sheet(index);
+      if (e.pointerType !== "mouse") return;
+      if (!finish() && !moved) sheet(idx());
     });
-    tile.addEventListener("pointercancel", end);
+
+    // Keyboard: Enter/Space on a focused photo opens the action sheet.
+    tile.addEventListener("click", (e) => { if (e.detail === 0) sheet(idx()); });
   }
 
   function drawGrid() {
@@ -119,7 +183,7 @@ export async function render(root) {
         const tile = h("button", { class: "tile", type: "button", "data-idx": String(i), "aria-label": `Photo ${i + 1}${i === 0 ? ", cover" : ""}. Tap for options, hold to drag.` },
           h("img", { src: p.url, alt: "" }),
           i === 0 ? h("i", { class: "cover" }, "Cover") : h("i", { class: "idx" }, String(i + 1)));
-        attachDrag(tile, i);
+        attachDrag(tile);
         return tile;
       }),
       state.photos.length < MAX_PHOTOS ? h("button", { class: "tile add", type: "button", onclick: () => libInput.click(), "aria-label": "Add photos" }, "+") : null);

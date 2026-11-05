@@ -67,8 +67,9 @@ p { margin: 0; }
 }
 .tile img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
 .tile.add { font-size: 30px; color: var(--accent); font-weight: 300; border: 2px dashed var(--border); background: transparent; }
-.tile.dragging { z-index: 5; box-shadow: var(--shadow-lg); touch-action: none; }
-.tile.drop { outline: 3px solid var(--accent); outline-offset: -3px; }
+.tile.dragging { z-index: 5; box-shadow: var(--shadow-lg); transition: none; opacity: .92; }
+/* while a photo is held, the page must not scroll (iOS would cancel the drag) */
+body.drag-lock { overflow: hidden; touch-action: none; overscroll-behavior: none; }
 .tile .cover, .tile .idx {
   position: absolute; left: 5px; top: 5px; font: 700 10px var(--font); font-style: normal;
   background: rgba(0, 0, 0, .6); color: #fff; padding: 2px 6px; border-radius: 6px;
@@ -238,7 +239,7 @@ p { margin: 0; }
 .toast.bad { background: var(--danger); color: #fff; }
 @keyframes toast-in { from { opacity: 0; transform: translate(-50%, 10px); } }
 .install {
-  position: fixed; left: 12px; right: 12px; top: calc(env(safe-area-inset-top) + 8px); z-index: 30;
+  position: absolute; left: 12px; right: 12px; top: calc(env(safe-area-inset-top) + 8px); z-index: 30; /* scrolls away with the page */
   display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 16px;
   background: var(--accent); color: var(--accent-ink); box-shadow: var(--shadow-lg);
 }
