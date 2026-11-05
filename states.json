@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "tones": ["neutral", "blue", "purple", "amber", "teal", "green", "gold", "red"],
+  "states": [
+    {"key": "captured",        "label": "Saved on phone", "tone": "neutral", "next": ["uploading", "archived"]},
+    {"key": "uploading",       "label": "Uploading",      "tone": "blue",    "next": ["queued", "needs_attention"]},
+    {"key": "queued",          "label": "Queued",         "tone": "blue",    "next": ["ai_processing", "archived"]},
+    {"key": "ai_processing",   "label": "AI writing",     "tone": "purple",  "animated": true, "next": ["draft_ready", "waiting_quota", "needs_attention"]},
+    {"key": "waiting_quota",   "label": "Waiting quota",  "tone": "amber",   "next": ["ai_processing"]},
+    {"key": "draft_ready",     "label": "Review",         "tone": "amber",   "needs_max": true, "next": ["live_ebay", "rejected", "ai_processing"]},
+    {"key": "live_ebay",       "label": "Live eBay",      "tone": "teal",    "next": ["live_both", "sold_ebay", "needs_attention"]},
+    {"key": "live_both",       "label": "Live both",      "tone": "green",   "next": ["sold_ebay", "sold_depop", "needs_attention"]},
+    {"key": "sold_ebay",       "label": "Sold · eBay",    "tone": "gold",    "next": ["delisting", "closed", "needs_attention"]},
+    {"key": "sold_depop",      "label": "Sold · Depop",   "tone": "gold",    "next": ["delisting", "closed", "needs_attention"]},
+    {"key": "delisting",       "label": "Delisting",      "tone": "gold",    "next": ["closed", "needs_attention"]},
+    {"key": "closed",          "label": "Done",           "tone": "neutral", "next": ["archived"]},
+    {"key": "needs_attention", "label": "Needs you",      "tone": "red",     "needs_max": true, "next": ["queued", "draft_ready", "live_ebay", "live_both", "delisting", "closed", "archived"]},
+    {"key": "rejected",        "label": "Rejected",       "tone": "neutral", "next": ["queued", "archived"]},
+    {"key": "archived",        "label": "Archived",       "tone": "neutral", "next": []}
+  ]
+}

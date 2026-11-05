@@ -1,0 +1,114 @@
+/* ListBot design tokens — shared by the iPhone PWA and the Mac dashboard (served at /app/css/tokens.css).
+   Chip tones map 1:1 to "tones" in states.json. Change both together (SYSTEMS.md). */
+:root {
+  color-scheme: light;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #f0f1f4;
+  --border: #e3e5ea;
+  --text: #0e1013;
+  --text-2: #5a5f69;
+  --text-3: #8b909a;
+  --accent: #3b5bfd;
+  --accent-ink: #ffffff;
+  --accent-soft: #e8ecff;
+  --danger: #d93a3a;
+  --success: #12935b;
+  --shadow: 0 1px 2px rgba(16, 20, 28, .06), 0 4px 14px rgba(16, 20, 28, .06);
+  --shadow-lg: 0 10px 40px rgba(16, 20, 28, .14);
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+
+  /* chip tones: background / ink */
+  --tone-neutral-bg: #eceef2; --tone-neutral: #4b505a;
+  --tone-blue-bg:    #e3edff; --tone-blue:    #1f5fd1;
+  --tone-purple-bg:  #efe8ff; --tone-purple:  #6a3fd8;
+  --tone-amber-bg:   #fff1d6; --tone-amber:   #9a5b00;
+  --tone-teal-bg:    #dcf5f3; --tone-teal:    #0b7a72;
+  --tone-green-bg:   #ddf5e6; --tone-green:   #127a43;
+  --tone-gold-bg:    #fbefc9; --tone-gold:    #8a6500;
+  --tone-red-bg:     #ffe3e1; --tone-red:     #c22a24;
+
+  /* data-viz roles (dataviz reference palette) */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --viz-grid: #e6e7ea;
+  --meter-track: #dce8f8;
+  --meter-ok: #2a78d6;
+  --meter-warn: #eda100;
+  --meter-danger: #e34948;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --bg: #0d0f13;
+    --surface: #171a20;
+    --surface-2: #1f232b;
+    --border: #2a2f39;
+    --text: #f2f3f5;
+    --text-2: #a9aeb8;
+    --text-3: #747a85;
+    --accent: #6f8bff;
+    --accent-ink: #0d0f13;
+    --accent-soft: #1f2747;
+    --danger: #ff6b66;
+    --success: #3ccf8e;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .25);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, .5);
+
+    --tone-neutral-bg: #262a33; --tone-neutral: #b9bec8;
+    --tone-blue-bg:    #142a4f; --tone-blue:    #8fb6ff;
+    --tone-purple-bg:  #2a1d4d; --tone-purple:  #c3a8ff;
+    --tone-amber-bg:   #3a2a0c; --tone-amber:   #ffc966;
+    --tone-teal-bg:    #0d3330; --tone-teal:    #6fe0d4;
+    --tone-green-bg:   #0f3321; --tone-green:   #74e0a3;
+    --tone-gold-bg:    #362c0b; --tone-gold:    #f2cf62;
+    --tone-red-bg:     #42191a; --tone-red:     #ff8e88;
+
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --viz-grid: #2a2f39;
+    --meter-track: #1d3150;
+    --meter-ok: #3987e5;
+    --meter-warn: #c98500;
+    --meter-danger: #e66767;
+  }
+}
+
+/* shared chip component */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  font: 600 12px/18px var(--font); white-space: nowrap;
+  background: var(--tone-neutral-bg); color: var(--tone-neutral);
+}
+.chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.chip[data-tone="blue"]   { background: var(--tone-blue-bg);   color: var(--tone-blue); }
+.chip[data-tone="purple"] { background: var(--tone-purple-bg); color: var(--tone-purple); }
+.chip[data-tone="amber"]  { background: var(--tone-amber-bg);  color: var(--tone-amber); }
+.chip[data-tone="teal"]   { background: var(--tone-teal-bg);   color: var(--tone-teal); }
+.chip[data-tone="green"]  { background: var(--tone-green-bg);  color: var(--tone-green); }
+.chip[data-tone="gold"]   { background: var(--tone-gold-bg);   color: var(--tone-gold); }
+.chip[data-tone="red"]    { background: var(--tone-red-bg);    color: var(--tone-red); }
+.chip[data-animated]::before { animation: chip-pulse 1.2s var(--ease) infinite; }
+@keyframes chip-pulse { 50% { opacity: .25; transform: scale(.6); } }
+@media (prefers-reduced-motion: reduce) { .chip[data-animated]::before { animation: none; } }
+
+/* demo photo placeholder (real photos replace this) */
+.ph {
+  display: grid; place-items: center; overflow: hidden;
+  background: linear-gradient(145deg, hsl(var(--h, 220) 45% 78%), hsl(calc(var(--h, 220) + 30) 40% 58%));
+  font-size: 34px; line-height: 1;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .ph {
+    background: linear-gradient(145deg, hsl(var(--h, 220) 30% 34%), hsl(calc(var(--h, 220) + 30) 30% 22%));
+  }
+}
+.ph img { width: 100%; height: 100%; object-fit: cover; }

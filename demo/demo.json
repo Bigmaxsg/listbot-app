@@ -1,0 +1,697 @@
+{
+ "_note": "Demo data only — fake store used when LISTBOT_DEMO=1 and in the phone app's demo mode.",
+ "items": [
+  {
+   "item_number": "A1042",
+   "title": "Carhartt Detroit Jacket Brown Duck Canvas Blanket Lined Men's L",
+   "brand": "Carhartt",
+   "size": "L",
+   "condition": "Pre-owned · Good",
+   "flaws": [
+    "Light fraying on left cuff",
+    "Small mark on back hem"
+   ],
+   "price": 94.99,
+   "depop_price": 95,
+   "state": "draft_ready",
+   "emoji": "🧥",
+   "hue": 28,
+   "photos": 8,
+   "updated": "2026-11-05T09:12:00",
+   "category": "Men's Coats, Jackets & Vests",
+   "category_alts": [
+    "Men's Workwear Jackets",
+    "Vintage Men's Coats"
+   ],
+   "aspects": [
+    [
+     "Brand",
+     "Carhartt",
+     true
+    ],
+    [
+     "Size",
+     "L",
+     true
+    ],
+    [
+     "Type",
+     "Jacket",
+     true
+    ],
+    [
+     "Color",
+     "Brown",
+     true
+    ],
+    [
+     "Material",
+     "Cotton Duck",
+     false
+    ],
+    [
+     "Style",
+     "Detroit",
+     false
+    ],
+    [
+     "Lining",
+     "Blanket",
+     false
+    ],
+    [
+     "Department",
+     "Men",
+     true
+    ]
+   ],
+   "description": "Classic Carhartt Detroit jacket in brown duck canvas with blanket lining and corduroy collar. Size Large. Pre-owned in good condition: light fraying on the left cuff and a small mark on the back hem (see photos). Pit to pit 25\", length 27\". Ships fast from a smoke-free home.",
+   "depop_description": "Carhartt Detroit jacket 🤎 brown duck canvas, blanket lined, cord collar. Size L, fits true. Light cuff wear + small hem mark (pics). P2P 25\" / length 27\". #carhartt #workwear #detroitjacket #vintage #y2k",
+   "comps": [
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 79,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 85,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 89,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 92,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 95,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 98,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 99,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 105,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 110,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 119,
+     "condition": "Used"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 129,
+     "condition": "Like new"
+    },
+    {
+     "title": "Carhartt Detroit Jacket Brown L",
+     "price": 72,
+     "condition": "Used"
+    }
+   ],
+   "my_history": "You sold a similar Carhartt Detroit jacket for $102 on Sep 12.",
+   "rationale": "Slightly under the active median for a fast sale; flaws disclosed.",
+   "timeline": [
+    [
+     "2026-11-05T09:02:00",
+     "uploading",
+     "Photos received (8)"
+    ],
+    [
+     "2026-11-05T09:04:00",
+     "ai_processing",
+     "AI wrote the listing"
+    ],
+    [
+     "2026-11-05T09:12:00",
+     "draft_ready",
+     "eBay draft ready for review"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1041",
+   "title": "Nike ACG Fleece Pullover Teal Half Zip Women's M",
+   "brand": "Nike",
+   "size": "M",
+   "condition": "Pre-owned · Excellent",
+   "flaws": [],
+   "price": 48.0,
+   "depop_price": 48,
+   "state": "draft_ready",
+   "emoji": "🧶",
+   "hue": 172,
+   "photos": 6,
+   "updated": "2026-11-05T08:40:00",
+   "category": "Women's Activewear Tops",
+   "category_alts": [
+    "Women's Sweatshirts"
+   ],
+   "aspects": [
+    [
+     "Brand",
+     "Nike",
+     true
+    ],
+    [
+     "Size",
+     "M",
+     true
+    ],
+    [
+     "Color",
+     "Teal",
+     true
+    ],
+    [
+     "Department",
+     "Women",
+     true
+    ],
+    [
+     "Type",
+     "Pullover",
+     false
+    ]
+   ],
+   "description": "Nike ACG half-zip fleece pullover in teal. Women's M. Excellent pre-owned condition, no flaws.",
+   "depop_description": "Nike ACG fleece half zip 🩵 women's M, like new. #nike #acg #fleece #gorpcore",
+   "comps": [
+    {
+     "title": "Nike ACG Fleece",
+     "price": 38,
+     "condition": "Used"
+    },
+    {
+     "title": "Nike ACG Fleece",
+     "price": 42,
+     "condition": "Used"
+    },
+    {
+     "title": "Nike ACG Fleece",
+     "price": 45,
+     "condition": "Used"
+    },
+    {
+     "title": "Nike ACG Fleece",
+     "price": 49,
+     "condition": "Used"
+    },
+    {
+     "title": "Nike ACG Fleece",
+     "price": 52,
+     "condition": "Used"
+    },
+    {
+     "title": "Nike ACG Fleece",
+     "price": 55,
+     "condition": "Used"
+    },
+    {
+     "title": "Nike ACG Fleece",
+     "price": 60,
+     "condition": "Used"
+    }
+   ],
+   "my_history": "",
+   "rationale": "Near median; excellent condition.",
+   "timeline": [
+    [
+     "2026-11-05T08:31:00",
+     "uploading",
+     "Photos received (6)"
+    ],
+    [
+     "2026-11-05T08:40:00",
+     "draft_ready",
+     "eBay draft ready for review"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1040",
+   "title": "Levi's 501 Original Fit Jeans Medium Wash W32 L30",
+   "brand": "Levi's",
+   "size": "32x30",
+   "condition": "Pre-owned · Good",
+   "flaws": [],
+   "price": 39.99,
+   "depop_price": 40,
+   "state": "ai_processing",
+   "emoji": "👖",
+   "hue": 215,
+   "photos": 7,
+   "updated": "2026-11-05T09:15:00",
+   "timeline": [
+    [
+     "2026-11-05T09:14:00",
+     "uploading",
+     "Photos received (7)"
+    ],
+    [
+     "2026-11-05T09:15:00",
+     "ai_processing",
+     "AI is writing the listing"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1039",
+   "title": "Patagonia Better Sweater Fleece Jacket Navy Men's XL",
+   "brand": "Patagonia",
+   "size": "XL",
+   "condition": "Pre-owned · Good",
+   "flaws": [],
+   "price": 64.99,
+   "depop_price": 65,
+   "state": "live_both",
+   "emoji": "🧥",
+   "hue": 230,
+   "photos": 6,
+   "updated": "2026-11-04T18:20:00",
+   "ebay_url": "https://www.ebay.com/",
+   "depop_url": "https://www.depop.com/",
+   "timeline": [
+    [
+     "2026-11-04T10:00:00",
+     "draft_ready",
+     "Draft ready"
+    ],
+    [
+     "2026-11-04T12:30:00",
+     "live_ebay",
+     "Published on eBay"
+    ],
+    [
+     "2026-11-04T18:20:00",
+     "live_both",
+     "Posted to Depop"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1038",
+   "title": "Vintage 90s Harley-Davidson Tee Black Single Stitch L",
+   "brand": "Harley-Davidson",
+   "size": "L",
+   "condition": "Pre-owned · Fair",
+   "flaws": [
+    "Fading on print"
+   ],
+   "price": 55.0,
+   "depop_price": 55,
+   "state": "live_ebay",
+   "emoji": "👕",
+   "hue": 0,
+   "photos": 5,
+   "updated": "2026-11-04T16:05:00",
+   "ebay_url": "https://www.ebay.com/",
+   "timeline": [
+    [
+     "2026-11-04T15:00:00",
+     "draft_ready",
+     "Draft ready"
+    ],
+    [
+     "2026-11-04T16:05:00",
+     "live_ebay",
+     "Published on eBay — Depop post waiting for you"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1037",
+   "title": "Dr. Martens 1460 Smooth Leather Boots Cherry Red UK 9",
+   "brand": "Dr. Martens",
+   "size": "UK 9",
+   "condition": "Pre-owned · Very good",
+   "flaws": [],
+   "price": 89.99,
+   "depop_price": 90,
+   "state": "sold_ebay",
+   "emoji": "🥾",
+   "hue": 350,
+   "photos": 8,
+   "updated": "2026-11-04T21:47:00",
+   "ebay_url": "https://www.ebay.com/",
+   "depop_url": "https://www.depop.com/",
+   "timeline": [
+    [
+     "2026-11-02T11:00:00",
+     "live_both",
+     "Live on both"
+    ],
+    [
+     "2026-11-04T21:47:00",
+     "sold_ebay",
+     "Sold on eBay for $89.99 — delete on Depop"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1036",
+   "title": "Champion Reverse Weave Hoodie Grey Men's M",
+   "brand": "Champion",
+   "size": "M",
+   "condition": "Pre-owned · Good",
+   "flaws": [],
+   "price": 34.99,
+   "depop_price": 35,
+   "state": "closed",
+   "emoji": "🧥",
+   "hue": 210,
+   "photos": 5,
+   "updated": "2026-11-03T14:10:00",
+   "timeline": [
+    [
+     "2026-11-01T10:00:00",
+     "live_both",
+     "Live on both"
+    ],
+    [
+     "2026-11-03T13:58:00",
+     "sold_depop",
+     "Sold on Depop for $35"
+    ],
+    [
+     "2026-11-03T14:10:00",
+     "closed",
+     "eBay listing ended automatically"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1035",
+   "title": "Coach Leather Crossbody Bag Brown",
+   "brand": "Coach",
+   "size": "One size",
+   "condition": "Pre-owned · Good",
+   "flaws": [],
+   "price": 72.0,
+   "depop_price": 72,
+   "state": "waiting_quota",
+   "emoji": "👜",
+   "hue": 30,
+   "photos": 7,
+   "updated": "2026-11-05T09:16:00",
+   "timeline": [
+    [
+     "2026-11-05T09:16:00",
+     "waiting_quota",
+     "Waiting for AI quota — resumes at 12:00 AM PT"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1034",
+   "title": "Ralph Lauren Cable Knit Sweater Cream Men's L",
+   "brand": "Ralph Lauren",
+   "size": "L",
+   "condition": "Pre-owned · Good",
+   "flaws": [],
+   "price": 44.99,
+   "depop_price": 45,
+   "state": "needs_attention",
+   "emoji": "🧶",
+   "hue": 45,
+   "photos": 6,
+   "updated": "2026-11-05T07:30:00",
+   "attention": "Depop sold email matched only by title (82% confidence). Confirm it's A1034 before ending eBay.",
+   "timeline": [
+    [
+     "2026-11-01T09:00:00",
+     "live_both",
+     "Live on both"
+    ],
+    [
+     "2026-11-05T07:30:00",
+     "needs_attention",
+     "Possible Depop sale — needs your confirmation"
+    ]
+   ]
+  },
+  {
+   "item_number": "A1033",
+   "title": "Adidas Samba OG White Black Men's 10",
+   "brand": "Adidas",
+   "size": "10",
+   "condition": "Pre-owned · Very good",
+   "flaws": [],
+   "price": 69.99,
+   "depop_price": 70,
+   "state": "live_both",
+   "emoji": "👟",
+   "hue": 0,
+   "photos": 8,
+   "updated": "2026-11-03T12:00:00",
+   "ebay_url": "https://www.ebay.com/",
+   "depop_url": "https://www.depop.com/",
+   "timeline": [
+    [
+     "2026-11-03T12:00:00",
+     "live_both",
+     "Live on both"
+    ]
+   ]
+  }
+ ],
+ "weekly_sales": [
+  {
+   "week": "Sep 14",
+   "revenue": 412,
+   "count": 7
+  },
+  {
+   "week": "Sep 21",
+   "revenue": 538,
+   "count": 9
+  },
+  {
+   "week": "Sep 28",
+   "revenue": 367,
+   "count": 6
+  },
+  {
+   "week": "Oct 5",
+   "revenue": 624,
+   "count": 11
+  },
+  {
+   "week": "Oct 12",
+   "revenue": 581,
+   "count": 10
+  },
+  {
+   "week": "Oct 19",
+   "revenue": 703,
+   "count": 12
+  },
+  {
+   "week": "Oct 26",
+   "revenue": 655,
+   "count": 11
+  },
+  {
+   "week": "Nov 2",
+   "revenue": 489,
+   "count": 8
+  }
+ ],
+ "sales": [
+  {
+   "item_number": "A1037",
+   "title": "Dr. Martens 1460 Boots Cherry Red UK 9",
+   "platform": "ebay",
+   "price": 89.99,
+   "date": "2026-11-04",
+   "days_to_sell": 2
+  },
+  {
+   "item_number": "A1036",
+   "title": "Champion Reverse Weave Hoodie Grey M",
+   "platform": "depop",
+   "price": 35.0,
+   "date": "2026-11-03",
+   "days_to_sell": 2
+  },
+  {
+   "item_number": "A1029",
+   "title": "Stüssy 8 Ball Tee Black XL",
+   "platform": "depop",
+   "price": 42.0,
+   "date": "2026-11-03",
+   "days_to_sell": 5
+  },
+  {
+   "item_number": "A1027",
+   "title": "Arc'teryx Atom LT Hoody Black M",
+   "platform": "ebay",
+   "price": 149.99,
+   "date": "2026-11-02",
+   "days_to_sell": 3
+  },
+  {
+   "item_number": "A1024",
+   "title": "Carhartt Double Knee Pants 34x32",
+   "platform": "ebay",
+   "price": 58.0,
+   "date": "2026-11-02",
+   "days_to_sell": 9
+  },
+  {
+   "item_number": "A1021",
+   "title": "Vintage Levi's Trucker Jacket M",
+   "platform": "depop",
+   "price": 65.0,
+   "date": "2026-11-01",
+   "days_to_sell": 12
+  },
+  {
+   "item_number": "A1019",
+   "title": "New Balance 990v5 Grey 10.5",
+   "platform": "ebay",
+   "price": 49.0,
+   "date": "2026-10-31",
+   "days_to_sell": 6
+  }
+ ],
+ "tasks": [
+  {
+   "type": "ebay_review",
+   "item_number": "A1042",
+   "title": "Review eBay draft",
+   "text": "Carhartt Detroit Jacket — AI draft ready",
+   "action": "Open eBay draft"
+  },
+  {
+   "type": "ebay_review",
+   "item_number": "A1041",
+   "title": "Review eBay draft",
+   "text": "Nike ACG Fleece — AI draft ready",
+   "action": "Open eBay draft"
+  },
+  {
+   "type": "depop_post",
+   "item_number": "A1038",
+   "title": "Post to Depop",
+   "text": "Harley-Davidson Tee is live on eBay. Post it to Depop.",
+   "action": "Post to Depop"
+  },
+  {
+   "type": "depop_delete",
+   "item_number": "A1037",
+   "title": "Delete on Depop",
+   "text": "Dr. Martens sold on eBay — delete it on Depop now.",
+   "action": "Open Depop",
+   "urgent": true
+  },
+  {
+   "type": "confirm_match",
+   "item_number": "A1034",
+   "title": "Confirm Depop sale",
+   "text": "Depop email looks like Ralph Lauren sweater (82%). Is it A1034?",
+   "action": "Confirm"
+  }
+ ],
+ "health": {
+  "integrations": [
+   {
+    "name": "Google Drive",
+    "status": "ok",
+    "last_sync": "1 min ago",
+    "note": "Watching ListBot/Inbox"
+   },
+   {
+    "name": "Gmail (Depop sales)",
+    "status": "ok",
+    "last_sync": "2 min ago",
+    "note": "Last Depop email: Nov 3"
+   },
+   {
+    "name": "eBay",
+    "status": "ok",
+    "last_sync": "3 min ago",
+    "note": "Token valid until May 2028"
+   },
+   {
+    "name": "Depop",
+    "status": "warn",
+    "last_sync": "2 hr ago",
+    "note": "Assisted mode — shop page check every 3 hr"
+   },
+   {
+    "name": "Gemini AI",
+    "status": "warn",
+    "last_sync": "just now",
+    "note": "Primary model paused until midnight PT"
+   }
+  ],
+  "quota": [
+   {
+    "label": "Primary model",
+    "used": 18,
+    "cap": 20,
+    "note": "Paused at 90% · resets 12:00 AM PT"
+   },
+   {
+    "label": "Fallback model",
+    "used": 212,
+    "cap": 500,
+    "note": "Active"
+   }
+  ],
+  "last_reconcile": "Today 3:00 AM · 0 mismatches"
+ },
+ "logs": [
+  {
+   "at": "09:16:02",
+   "level": "WARN",
+   "msg": "QuotaManager: primary model at 90% (18/20) — switching to fallback"
+  },
+  {
+   "at": "09:15:40",
+   "level": "INFO",
+   "msg": "A1040: AI listing started (7 photos)"
+  },
+  {
+   "at": "09:14:58",
+   "level": "INFO",
+   "msg": "Drive: claimed Inbox/A1040 (_READY found)"
+  },
+  {
+   "at": "09:12:11",
+   "level": "INFO",
+   "msg": "A1042: eBay draft created (dry run)"
+  },
+  {
+   "at": "07:30:05",
+   "level": "WARN",
+   "msg": "Gmail: Depop sale matched A1034 by title only (82%) — asking Max"
+  },
+  {
+   "at": "03:00:00",
+   "level": "INFO",
+   "msg": "Nightly reconciliation: 41 eBay / 33 Depop listings, 0 mismatches"
+  }
+ ]
+}
