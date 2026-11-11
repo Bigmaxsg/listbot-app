@@ -9,6 +9,9 @@ import * as taskView from "./views/tasks.js";
 import * as sold from "./views/sold.js";
 import * as settings from "./views/settings.js";
 
+// Tells boot-guard.js the module graph loaded (if any import fails, this line never runs).
+window.__listbotBooted = true;
+
 const VIEWS = { capture, items, tasks: taskView, sold, settings };
 const view = document.getElementById("view");
 

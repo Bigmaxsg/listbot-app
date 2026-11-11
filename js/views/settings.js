@@ -22,12 +22,9 @@ function toggle(on, onchange, label) {
 const soon = (label) => h("span", { class: "soon" }, label);
 
 // In Home Screen mode there is no browser reload button, so the app needs its own.
-async function reloadApp() {
-  try {
-    const reg = "serviceWorker" in navigator ? await navigator.serviceWorker.getRegistration() : null;
-    if (reg) await reg.update();
-  } catch { /* offline: reload from cache */ }
-  location.reload();
+// Re-downloads every file (boot-guard.js), so a half-finished update can't stick.
+function reloadApp() {
+  if (window.listbotHardReload) window.listbotHardReload(); else location.reload();
 }
 
 export async function render(root) {
