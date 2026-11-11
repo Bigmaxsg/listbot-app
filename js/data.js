@@ -45,9 +45,18 @@ export async function allItems() {
   return demoOn() ? [...local, ...demo.items] : local;
 }
 
+// Tasks Max has ticked off this session stay hidden (and out of the tab badge) until the app reloads.
+const doneTasks = new Set();
+const taskKey = (t) => `${t.type}:${t.item_number}`;
+export function completeTask(t) { doneTasks.add(taskKey(t)); }
+export function reopenTask(t) { doneTasks.delete(taskKey(t)); }
+
+// Open tasks, urgent first (a sold item still listed on the other site is the double-sell risk).
 export async function tasks() {
   const { demo } = await load();
-  return demoOn() ? demo.tasks : [];
+  if (!demoOn()) return [];
+  const open = demo.tasks.filter((t) => !doneTasks.has(taskKey(t)));
+  return [...open.filter((t) => t.urgent), ...open.filter((t) => !t.urgent)];
 }
 
 export async function sales() {

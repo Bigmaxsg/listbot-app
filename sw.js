@@ -1,10 +1,10 @@
 // ListBot service worker. Network-first so iPhones always get the latest deploy when online,
 // falling back to cache offline. CACHE_VERSION is bumped by scripts/bump_version.py.
-const CACHE_VERSION = "listbot-0.1.2";
+const CACHE_VERSION = "listbot-0.3.0";
 const SHELL = [
   "./", "./index.html", "./manifest.json", "./version.js", "./states.json", "./demo/demo.json",
-  "./css/tokens.css", "./css/app.css",
-  "./js/app.js", "./js/ui.js", "./js/data.js", "./js/store.js", "./js/images.js", "./js/itemnumber.js",
+  "./css/tokens.css", "./css/app.css", "./css/views.css",
+  "./js/app.js", "./js/ui.js", "./js/icons.js", "./js/data.js", "./js/store.js", "./js/images.js", "./js/itemnumber.js",
   "./js/views/capture.js", "./js/views/items.js", "./js/views/item.js", "./js/views/tasks.js",
   "./js/views/sold.js", "./js/views/settings.js",
   "./icons/icon-192.png", "./icons/apple-touch-icon.png",

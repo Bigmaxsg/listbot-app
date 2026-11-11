@@ -1,5 +1,6 @@
 // Capture tab: item number + photos + notes → Submit. Phase 1 saves on the phone; Phase 2 uploads to Drive.
-import { h, toast, haptic } from "../ui.js";
+import { h, fill, toast, haptic, sheet as actionSheet, header } from "../ui.js";
+import { icon } from "../icons.js";
 import { normalizeItemNumber, isValidItemNumber, nextItemNumber, isDuplicate } from "../itemnumber.js";
 import { toJpeg } from "../images.js";
 import { saveItem } from "../store.js";
@@ -7,19 +8,11 @@ import { allItems } from "../data.js";
 
 const SHOTS = ["Front", "Back", "Tag", "Label", "Flaws", "Measurements"];
 const MAX_PHOTOS = 24;
-const ICON_CAMERA = "M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z M12 17a4 4 0 1 0 0-8 4 4 0 0 0 0 8z";
-const ICON_LIBRARY = "M3 3h18v18H3z M8.5 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M21 15l-5-5L5 21";
 
-function svgIcon(d) {
-  const ns = "http://www.w3.org/2000/svg";
-  const svg = document.createElementNS(ns, "svg");
-  svg.setAttribute("viewBox", "0 0 24 24");
-  svg.setAttribute("aria-hidden", "true");
-  const path = document.createElementNS(ns, "path");
-  path.setAttribute("d", d);
-  svg.append(path);
-  return svg;
-}
+// The item being captured lives here, not inside render(), so switching tabs mid-capture
+// (to check Items, say) never throws away photos Max already took.
+let draft = null;
+const untouched = (d) => !d.photos.length && !d.notes && !d.shots.size && d.number === d.suggested;
 
 function lastItem() {
   try { return localStorage.getItem("listbot.lastItem") || ""; } catch { return ""; }
@@ -31,7 +24,11 @@ function rememberLast(v) {
 export async function render(root) {
   const used = (await allItems()).map((i) => i.item_number);
   const newest = lastItem() || used.slice().sort().pop() || "A1000";
-  const state = { number: nextItemNumber(newest, used), photos: [], shots: new Set(), notes: "", busy: false };
+  if (!draft || untouched(draft)) {
+    const suggested = nextItemNumber(newest, used);
+    draft = { number: suggested, suggested, photos: [], shots: new Set(), notes: "", busy: false };
+  }
+  const state = draft;
 
   const numInput = h("input", {
     id: "item-number", class: "num-input", inputmode: "text", autocapitalize: "characters",
@@ -40,18 +37,22 @@ export async function render(root) {
   const numHelp = h("p", { id: "num-help", class: "help" });
   const grid = h("div", { class: "photo-grid", "aria-live": "polite" });
   const count = h("span", { class: "count" });
+  const shotCount = h("span", { class: "count" });
+  const reset = h("button", { class: "link-btn", type: "button", hidden: true }, "Start over");
   const submit = h("button", { class: "btn primary block submit", type: "button" });
   const camInput = h("input", { type: "file", accept: "image/*", capture: "environment", hidden: true });
   const libInput = h("input", { type: "file", accept: "image/*", multiple: true, hidden: true });
 
   function validate() {
     const v = normalizeItemNumber(numInput.value);
-    let msg = `Suggested next after ${newest}. Tap to change.`;
+    state.number = v;
+    reset.hidden = untouched(state) || state.busy;
+    let msg = `Next after ${newest}. Tap to change.`;
     let bad = false;
     if (!v) { msg = "Enter the item number from your tag."; bad = true; }
     else if (!isValidItemNumber(v)) { msg = "Letters, numbers and dashes only (max 50)."; bad = true; }
     else if (isDuplicate(v, used)) { msg = `${v} already exists — use a new number so photos never mix.`; bad = true; }
-    else if (v !== state.number) msg = "Custom number.";
+    else if (v !== state.suggested) msg = `Custom number (suggested: ${state.suggested}).`;
     numHelp.textContent = msg;
     numHelp.classList.toggle("bad", bad);
     numInput.classList.toggle("bad", bad);
@@ -70,17 +71,16 @@ export async function render(root) {
   }
 
   function sheet(i) {
-    const close = () => overlay.remove();
-    const act = (label, fn, cls = "") => h("button", { class: "sheet-btn " + cls, type: "button", onclick: () => { close(); fn(); } }, label);
-    const overlay = h("div", { class: "sheet-wrap", onclick: (e) => { if (e.target === overlay) close(); } },
-      h("div", { class: "sheet", role: "dialog", "aria-label": `Photo ${i + 1}` },
-        h("div", { class: "sheet-title" }, `Photo ${i + 1} of ${state.photos.length}`),
-        i > 0 ? act("Make cover photo", () => move(i, 0)) : null,
-        i > 0 ? act("Move earlier", () => move(i, i - 1)) : null,
-        i < state.photos.length - 1 ? act("Move later", () => move(i, i + 1)) : null,
-        act("Remove photo", () => { URL.revokeObjectURL(state.photos[i].url); state.photos.splice(i, 1); drawGrid(); }, "danger"),
-        act("Cancel", () => {}, "cancel")));
-    document.body.append(overlay);
+    const last = state.photos.length - 1;
+    actionSheet({
+      title: `Photo ${i + 1} of ${state.photos.length}`, preview: state.photos[i].url,
+      actions: [
+        i > 0 && { label: "Make cover photo", fn: () => move(i, 0) },
+        i > 0 && { label: "Move earlier", fn: () => move(i, i - 1) },
+        i < last && { label: "Move later", fn: () => move(i, i + 1) },
+        { label: "Remove photo", cls: "danger", fn: () => { URL.revokeObjectURL(state.photos[i].url); state.photos.splice(i, 1); drawGrid(); } },
+      ],
+    });
   }
 
   // Hold ~250ms, then drag to reorder. iOS starts scrolling the page as soon as a finger moves, which
@@ -181,7 +181,7 @@ export async function render(root) {
   }
 
   function drawGrid() {
-    grid.replaceChildren(
+    fill(grid, 
       ...state.photos.map((p, i) => {
         const tile = h("button", { class: "tile", type: "button", "data-idx": String(i), "aria-label": `Photo ${i + 1}${i === 0 ? ", cover" : ""}. Tap for options, hold to drag.` },
           h("img", { src: p.url, alt: "" }),
@@ -189,8 +189,11 @@ export async function render(root) {
         attachDrag(tile);
         return tile;
       }),
-      state.photos.length < MAX_PHOTOS ? h("button", { class: "tile add", type: "button", onclick: () => libInput.click(), "aria-label": "Add photos" }, "+") : null);
-    count.textContent = state.photos.length ? `${state.photos.length}/${MAX_PHOTOS}` : "";
+      state.photos.length && state.photos.length < MAX_PHOTOS ? h("button", { class: "tile add", type: "button", onclick: () => libInput.click(), "aria-label": "Add photos" }, "+") : null);
+    count.textContent = state.photos.length ? `${state.photos.length} of ${MAX_PHOTOS}` : "";
+    dropzone.hidden = state.photos.length > 0;
+    submitBar.hidden = !state.photos.length; // nothing to submit yet, so don't cover the screen with a dead button
+    hint.hidden = state.photos.length < 2;
     validate();
   }
 
@@ -208,19 +211,36 @@ export async function render(root) {
   numInput.addEventListener("input", validate);
   numInput.addEventListener("focus", () => numInput.select());
 
+  const dropzone = h("button", { class: "dropzone", type: "button", onclick: () => camInput.click() },
+    h("span", { class: "dz-ico" }, icon("camera")),
+    h("b", {}, "Add photos"),
+    h("span", {}, "Start with the front — the first photo is the cover"),
+    h("span", { class: "steps" }, ...["Snap", "Submit", "ListBot writes it"].map((s, k) => h("i", {}, h("b", {}, String(k + 1)), s))));
+  const hint = h("p", { class: "hint" }, "Tap a photo for options · hold and drag to reorder");
+  const submitBar = h("div", { class: "submit-bar" }, submit);
+  const drawShots = () => { shotCount.textContent = `${state.shots.size} of ${SHOTS.length}`; };
+
+  reset.addEventListener("click", () => actionSheet({
+    title: "Start over?", text: "This clears the photos and notes for this item.",
+    actions: [{ label: "Clear this item", cls: "danger", fn: () => { state.photos.forEach((p) => URL.revokeObjectURL(p.url)); draft = null; render(root); } }],
+  }));
+
   const shotChips = h("div", { class: "shots", role: "group", "aria-label": "Shot checklist" },
     ...SHOTS.map((s) => h("button", {
-      class: "shot", type: "button", "aria-pressed": "false",
+      class: "shot", type: "button", "aria-pressed": String(state.shots.has(s)),
       onclick: (e) => {
         const on = !state.shots.has(s);
         on ? state.shots.add(s) : state.shots.delete(s);
         e.currentTarget.setAttribute("aria-pressed", String(on));
         haptic(5);
+        drawShots();
+        validate();
       },
     }, s)));
 
-  const notes = h("textarea", { class: "notes", rows: "2", placeholder: "Brand, size, flaws… (tap 🎤 to dictate)" });
-  notes.addEventListener("input", () => { state.notes = notes.value; });
+  const notes = h("textarea", { id: "notes", class: "notes", rows: "2", placeholder: "Brand, size, flaws… (tap the mic on the keyboard to dictate)" });
+  notes.value = state.notes;
+  notes.addEventListener("input", () => { state.notes = notes.value; validate(); });
 
   submit.addEventListener("click", async () => {
     const v = validate();
@@ -243,7 +263,8 @@ export async function render(root) {
       }, blobs);
       rememberLast(v);
       state.photos.forEach((p) => URL.revokeObjectURL(p.url));
-      progress.replaceChildren(h("div", { class: "done-check" }, "✓"), h("p", {}, `${v} saved`));
+      draft = null;
+      progress.replaceChildren(h("div", { class: "done-check" }, icon("check")), h("p", {}, `${v} saved`));
       haptic(30);
       setTimeout(() => { progress.remove(); render(root); }, 900);
     } catch (err) {
@@ -254,19 +275,21 @@ export async function render(root) {
     }
   });
 
-  root.replaceChildren(
-    h("header", { class: "top" }, h("h1", {}, "New item"), count),
+  fill(root, 
+    header("New item", null, reset),
     h("section", { class: "card num-card" },
       h("label", { for: "item-number", class: "lbl" }, "Item number"),
       numInput, numHelp),
-    h("div", { class: "photo-btns" },
-      h("button", { class: "btn big", type: "button", onclick: () => camInput.click() }, svgIcon(ICON_CAMERA), "Take photo"),
-      h("button", { class: "btn big", type: "button", onclick: () => libInput.click() }, svgIcon(ICON_LIBRARY), "From library")),
-    grid,
-    h("p", { class: "hint" }, "Tap a photo for options · hold and drag to reorder"),
-    h("section", { class: "card" }, h("span", { class: "lbl" }, "Shot checklist"), shotChips),
-    h("section", { class: "card" }, h("label", { class: "lbl" }, "Notes for the AI (optional)"), notes),
-    h("div", { class: "submit-bar" }, submit),
+    h("section", { class: "card photos-card" },
+      h("div", { class: "lbl-row" }, h("span", { class: "lbl" }, "Photos"), count),
+      dropzone, grid, hint,
+      h("div", { class: "photo-btns" },
+        h("button", { class: "btn big tint", type: "button", onclick: () => camInput.click() }, icon("camera"), "Take photo"),
+        h("button", { class: "btn big", type: "button", onclick: () => libInput.click() }, icon("image"), "From library"))),
+    h("section", { class: "card" }, h("div", { class: "lbl-row" }, h("span", { class: "lbl" }, "Shot checklist"), shotCount), shotChips),
+    h("section", { class: "card" }, h("label", { class: "lbl", for: "notes" }, "Notes for the AI (optional)"), notes),
+    submitBar,
     camInput, libInput);
+  drawShots();
   drawGrid();
 }

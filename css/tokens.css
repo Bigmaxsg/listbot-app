@@ -1,94 +1,82 @@
 /* ListBot design tokens — shared by the iPhone PWA and the Mac dashboard (served at /app/css/tokens.css).
    Chip tones map 1:1 to "tones" in states.json. Change both together (SYSTEMS.md). */
 :root {
-  color-scheme: light;
-  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  /* ListBot is dark-only by design (neon on near-black). There is no light theme. */
+  color-scheme: dark;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, monospace;
 
-  --bg: #f4f5f7;
-  --surface: #ffffff;
-  --surface-2: #f0f1f4;
-  --border: #e3e5ea;
-  --text: #0e1013;
-  --text-2: #5a5f69;
-  --text-3: #8b909a;
-  --accent: #3b5bfd;
+  --bg: #07070d;
+  --surface: #12121c;
+  --surface-2: #1c1c2a;
+  --border: #2b2b3d;
+  --text: #f6f6fb;
+  --text-2: #a9abbf;
+  --text-3: #6f7189;
+  --accent: #9a7bff;
+  --accent-2: #ff4fa3;
   --accent-ink: #ffffff;
-  --accent-soft: #e8ecff;
-  --danger: #d93a3a;
-  --success: #12935b;
-  --shadow: 0 1px 2px rgba(16, 20, 28, .06), 0 4px 14px rgba(16, 20, 28, .06);
-  --shadow-lg: 0 10px 40px rgba(16, 20, 28, .14);
+  --accent-soft: rgba(154, 123, 255, .18);
+  --danger: #ff5c7a;
+  --success: #3dffa8;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .5), 0 8px 24px rgba(0, 0, 0, .35);
+  --shadow-lg: 0 18px 60px rgba(0, 0, 0, .65);
 
-  --radius: 16px;
+  /* signature gradient + glow: primary buttons, active tab, big numbers, chart bars */
+  --grad: linear-gradient(135deg, #7a5cff 0%, #c04dff 52%, #ff4fa3 100%);
+  --grad-text: linear-gradient(180deg, #ffffff 35%, #c3b8ff 100%);
+  --glow: 0 8px 28px rgba(160, 92, 255, .45);
+  /* glass card: translucent fill + hairline, sits on the ambient background glow */
+  --card-bg: linear-gradient(180deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .03));
+  --card-line: rgba(255, 255, 255, .09);
+
+  --radius: 18px;
   --radius-sm: 10px;
   --ease: cubic-bezier(.2, .8, .2, 1);
 
   /* chip tones: background / ink */
-  --tone-neutral-bg: #eceef2; --tone-neutral: #4b505a;
-  --tone-blue-bg:    #e3edff; --tone-blue:    #1f5fd1;
-  --tone-purple-bg:  #efe8ff; --tone-purple:  #6a3fd8;
-  --tone-amber-bg:   #fff1d6; --tone-amber:   #9a5b00;
-  --tone-teal-bg:    #dcf5f3; --tone-teal:    #0b7a72;
-  --tone-green-bg:   #ddf5e6; --tone-green:   #127a43;
-  --tone-gold-bg:    #fbefc9; --tone-gold:    #8a6500;
-  --tone-red-bg:     #ffe3e1; --tone-red:     #c22a24;
+  --tone-neutral-bg: rgba(255, 255, 255, .08); --tone-neutral: #c2c5d6;
+  --tone-blue-bg:    rgba(80, 150, 255, .18);  --tone-blue:    #8fbaff;
+  --tone-purple-bg:  rgba(170, 120, 255, .2);  --tone-purple:  #cdb1ff;
+  --tone-amber-bg:   rgba(255, 184, 61, .17);  --tone-amber:   #ffcc66;
+  --tone-teal-bg:    rgba(48, 224, 208, .16);  --tone-teal:    #66ecdd;
+  --tone-green-bg:   rgba(61, 255, 168, .15);  --tone-green:   #5dffb6;
+  --tone-gold-bg:    rgba(255, 214, 74, .16);  --tone-gold:    #ffdc6b;
+  --tone-red-bg:     rgba(255, 92, 122, .18);  --tone-red:     #ff8fa3;
 
-  /* data-viz roles (dataviz reference palette) */
-  --series-1: #2a78d6;
-  --series-2: #eb6834;
-  --viz-grid: #e6e7ea;
-  --meter-track: #dce8f8;
-  --meter-ok: #2a78d6;
-  --meter-warn: #eda100;
-  --meter-danger: #e34948;
+  /* data-viz roles */
+  --series-1: #8f7bff;
+  --series-2: #ff7a59;
+  --viz-grid: rgba(255, 255, 255, .08);
+  --meter-track: rgba(255, 255, 255, .09);
+  --meter-ok: #8f7bff;
+  --meter-warn: #ffb83d;
+  --meter-danger: #ff5c7a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:where(:not([data-theme="light"])) {
-    color-scheme: dark;
-    --bg: #0d0f13;
-    --surface: #171a20;
-    --surface-2: #1f232b;
-    --border: #2a2f39;
-    --text: #f2f3f5;
-    --text-2: #a9aeb8;
-    --text-3: #747a85;
-    --accent: #6f8bff;
-    --accent-ink: #0d0f13;
-    --accent-soft: #1f2747;
-    --danger: #ff6b66;
-    --success: #3ccf8e;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .25);
-    --shadow-lg: 0 10px 40px rgba(0, 0, 0, .5);
-
-    --tone-neutral-bg: #262a33; --tone-neutral: #b9bec8;
-    --tone-blue-bg:    #142a4f; --tone-blue:    #8fb6ff;
-    --tone-purple-bg:  #2a1d4d; --tone-purple:  #c3a8ff;
-    --tone-amber-bg:   #3a2a0c; --tone-amber:   #ffc966;
-    --tone-teal-bg:    #0d3330; --tone-teal:    #6fe0d4;
-    --tone-green-bg:   #0f3321; --tone-green:   #74e0a3;
-    --tone-gold-bg:    #362c0b; --tone-gold:    #f2cf62;
-    --tone-red-bg:     #42191a; --tone-red:     #ff8e88;
-
-    --series-1: #3987e5;
-    --series-2: #d95926;
-    --viz-grid: #2a2f39;
-    --meter-track: #1d3150;
-    --meter-ok: #3987e5;
-    --meter-warn: #c98500;
-    --meter-danger: #e66767;
-  }
+/* ambient glow behind everything (phone + dashboard). Fixed, so content scrolls over it. */
+html { background: var(--bg); }
+body::before {
+  content: ""; position: fixed; inset: -20%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38% 30% at 18% 12%, rgba(122, 92, 255, .30), transparent 70%),
+    radial-gradient(34% 28% at 88% 30%, rgba(255, 79, 163, .16), transparent 70%),
+    radial-gradient(40% 30% at 55% 95%, rgba(48, 160, 255, .13), transparent 70%);
+  animation: drift 22s ease-in-out infinite alternate;
 }
+@keyframes drift { to { transform: translate3d(3%, -2%, 0) rotate(4deg); } }
+@media (prefers-reduced-motion: reduce) { body::before { animation: none; } }
+.grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 /* shared chip component */
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 3px 10px; border-radius: 999px;
   font: 600 12px/18px var(--font); white-space: nowrap;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 22%, transparent);
   background: var(--tone-neutral-bg); color: var(--tone-neutral);
 }
-.chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 8px currentColor; }
 .chip[data-tone="blue"]   { background: var(--tone-blue-bg);   color: var(--tone-blue); }
 .chip[data-tone="purple"] { background: var(--tone-purple-bg); color: var(--tone-purple); }
 .chip[data-tone="amber"]  { background: var(--tone-amber-bg);  color: var(--tone-amber); }
@@ -103,12 +91,7 @@
 /* demo photo placeholder (real photos replace this) */
 .ph {
   display: grid; place-items: center; overflow: hidden;
-  background: linear-gradient(145deg, hsl(var(--h, 220) 45% 78%), hsl(calc(var(--h, 220) + 30) 40% 58%));
-  font-size: 34px; line-height: 1;
-}
-@media (prefers-color-scheme: dark) {
-  :root:where(:not([data-theme="light"])) .ph {
-    background: linear-gradient(145deg, hsl(var(--h, 220) 30% 34%), hsl(calc(var(--h, 220) + 30) 30% 22%));
-  }
+  background: linear-gradient(145deg, hsl(var(--h, 220) 55% 42%), hsl(calc(var(--h, 220) + 40) 50% 22%));
+  font-size: 34px; line-height: 1; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
 }
 .ph img { width: 100%; height: 100%; object-fit: cover; }

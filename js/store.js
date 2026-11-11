@@ -56,6 +56,15 @@ export async function photosFor(itemNumber, count) {
   return out;
 }
 
+// Removes one item and its photos from this phone.
+export async function deleteItem(itemNumber, count) {
+  const db = await open();
+  return tx(db, ["items", "photos"], "readwrite", (t) => {
+    t.objectStore("items").delete(itemNumber);
+    for (let i = 0; i < count; i += 1) t.objectStore("photos").delete(`${itemNumber}/${i}`);
+  });
+}
+
 export async function clearAll() {
   const db = await open();
   return tx(db, ["items", "photos"], "readwrite", (t) => { t.objectStore("items").clear(); t.objectStore("photos").clear(); });
